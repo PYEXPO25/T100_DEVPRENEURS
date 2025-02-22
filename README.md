@@ -1,4 +1,7 @@
 # T100_DEVPRENEURS
+
+![image](https://github.com/user-attachments/assets/e584d243-1f29-4945-87ed-f1e03b323fc1)
+
 PROBLEM STATEMENT:
  For Students:
  ➢Struggle to keep up with fast-paced lectures.
@@ -30,11 +33,10 @@ PROPOSED SOLUTION:
  MOHAMED FAIZEL: Front-end
  DAMASVASREE: Back-end
 
+ TEAM PHOTO:
+ ![WhatsApp Image 2025-02-20 at 09 22 12_f97c6d81](https://github.com/user-attachments/assets/138c64df-207f-4571-a71d-2cb24ec246f2)
 
-
-
-
- TECHNICAL STACK:
+TECHNICAL STACK:
 
 Front-End:
  1) HTML
@@ -44,6 +46,7 @@ Back-End:
 1)streamlit
 2)Langchain,LLM
 3)OpenAI Whisper
+
 
 
  
