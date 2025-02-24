@@ -8,7 +8,11 @@ import google.generativeai as genai
 from langchain_community.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
-
+import json
+import pytesseract
+from pdf2image import convert_from_path
+from PIL import Image
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR"
 # Load environment variables
 load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -19,14 +23,31 @@ genai.configure(api_key=API_KEY)
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "uploads"
+app.config["MAX_CONTENT_LENGTH"] = 10000 * 1024 * 1024  # Set max upload size to 50MB (adjust as needed)
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 # PDF Processing
 def get_pdf_text(pdf_path):
     text = ""
     pdf_reader = PdfReader(pdf_path)
+    
+    # Try extracting text normally first (for digital PDFs)
     for page in pdf_reader.pages:
-        text += page.extract_text()
+        page_text = page.extract_text()
+        if page_text:  # If extract_text() returns text, append it
+            text += page_text + "\n"
+
+    # If no text was extracted, assume it's a scanned PDF and use OCR
+    if not text.strip():
+        text = extract_text_from_scanned_pdf(pdf_path)
+
+    return text
+
+def extract_text_from_scanned_pdf(pdf_path):
+    text = ""
+    images = convert_from_path(pdf_path)  # Convert PDF pages to images
+    for image in images:
+        text += pytesseract.image_to_string(image) + "\n"  # Apply OCR
     return text
 
 def get_text_chunks(text):
@@ -57,6 +78,25 @@ def get_conversational_chain():
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
     return load_qa_chain(model, chain_type="stuff", prompt=prompt)
+
+def get_mcq_chain():
+    prompt_template = """
+    Generate multiple-choice questions (MCQs) based on the given context.
+    Each MCQ should have four options (A, B, C, D) with only one correct answer.
+
+    Context:\n {context}\n
+
+    Provide the output in JSON format:
+    [
+        {{"question": "Sample question?", "options": ["A", "B", "C", "D"], "answer": "A"}}
+    ]
+    """
+    
+    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.7)
+    prompt = PromptTemplate(template=prompt_template, input_variables=["context"])
+    return load_qa_chain(model, chain_type="stuff", prompt=prompt)
+
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -94,6 +134,28 @@ def ask_question():
     response = chain({"input_documents": docs, "question": question}, return_only_outputs=True)
 
     return jsonify({"answer": response["output_text"]})
+
+@app.route("/generate_mcq", methods=["POST"])
+def generate_mcq():
+    vector_store = load_vector_store()
+    if not vector_store:
+        return jsonify({"error": "No processed PDF found. Upload and process a PDF first."})
+
+    # Retrieve relevant document chunks
+    docs = vector_store.similarity_search("Generate MCQs from this document")
+    
+    if not docs:
+        return jsonify({"error": "No relevant information found for MCQs."})
+
+    chain = get_mcq_chain()
+    response = chain({"input_documents": docs}, return_only_outputs=True)
+
+    try:
+        mcqs = json.loads(response["output_text"])  # Convert response to JSON format
+    except json.JSONDecodeError:
+        return jsonify({"error": "Failed to parse MCQs. Try again."})
+
+    return jsonify({"mcqs": mcqs})
 
 if __name__ == "__main__":
     app.run(debug=True)
