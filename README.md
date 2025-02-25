@@ -4,7 +4,7 @@
 
 ## Problem Statement
 
-*Problem Statement ID – 116*
+*Problem Statement ID – PYS116*
 
 FOR STUDENTS
  ➢Struggle to keep up with fast-paced lectures.
