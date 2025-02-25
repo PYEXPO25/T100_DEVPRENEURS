@@ -4,32 +4,53 @@
 
 ## Problem Statement
 
-*Problem Statement ID – xxxxx*
+*Problem Statement ID – 116*
 
-Formulate your problem statement clearly and concisely.
-
----
+FOR STUDENTS
+ ➢Struggle to keep up with fast-paced lectures.
+ ➢Difficulty in revising lengthy lecture materials.
+ ➢Lack of quick and efficient ways to clear doubts.
+ ➢Limited access to structured quizzes for self-assessment.
+FOR TEACHERS:
+ ➢Time-consuming lecture note and quiz preparation.
+ ➢Difficulty in manually creating quizzes and exams.
+ ➢Lack of tools for tracking student engagement and progress
 
 ## Overview
 
-Provide an overview of the project, its purpose, and what it aims to achieve along with proposed solution
+PURPOSE AND OBJECTIVES:
+
+This project aims to address challenges faced by both students and teachers in the learning process by providing an AI-powered platform that automates note-taking, quiz generation, and content summarization. The primary goals include:
+
+Helping students keep up with fast-paced lectures and revise efficiently.
+Providing quick and structured ways to clear doubts.
+Enabling teachers to automate lecture note preparation and quiz creation.
+Offering tools for tracking student engagement and progress.
+
+PROPOSED SOLUTION:
+
+An AI-driven web platform with the following key features:
+
+Upload Notes & Lectures: Teachers can upload PDFs, documents, and lecture videos.
+Smart Notes Generation: AI extracts key points and structures lecture content.
+AI Q&A System: Students can ask questions within notes and get instant answers.
+Auto-Generated Quizzes: AI creates MCQs, True/False, and essay-type questions.
+Video Summarization: AI transcribes and highlights key takeaways from lectures.
 
 ---
 
 ## Team Members
 
-*Team ID – xxxxx*
+*Team ID – T100*
 
 List your team members along with their roles.
 
-- *Member 1* - Team Leader
-- *Member 2* - Role
-- *Member 3* - Role
-- *Member 4* - Role
-- *Member 5* - Role
-- *Member 6* - Role
-- *Member 7* - Role
-- *Member 8* - Role
+- *JERSHINA BLESSY P* - Team Leader
+- *HARINI S* - Back-end
+- *KISHORE JOTHISH N* - Front-end
+- *SANTHOSINI M* - Paper work
+- *MOHAMED FAIZAL A* - Front-end
+- *DAMASVASREE N* - Back-end
 
 ![Team Photo](media/team-photo.png)
 
@@ -37,12 +58,9 @@ List your team members along with their roles.
 
 ## Technical Stack
 
-List the technologies and tools used in the project. For example:
-
-- *Frontend:* HTML, CSS, JavaScript, ReactJS
-- *Backend:* Flask, Django
-- *Database:* MongoDB, MySQL
-- *Other Tools:* Docker, Git, TensorFlow
+- *Frontend:* HTML, CSS, JavaScript
+- *Backend:* Flask, Gemini AI, Langchain, Faiss, Pypdf2, Pytesseract and Pdf2image, OpenAI Whisper 
+- *Database:* MySQL
 
 ---
 
