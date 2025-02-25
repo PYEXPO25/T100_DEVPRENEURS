@@ -52,7 +52,7 @@ List your team members along with their roles.
 - *MOHAMED FAIZAL A* - Front-end
 - *DAMASVASREE N* - Back-end
 
-![Team Photo](media/team-photo.png)
+![image](https://github.com/user-attachments/assets/37715985-48c7-40d7-8e90-6792df396bdc)
 
 ---
 
